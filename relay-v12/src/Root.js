@@ -2,8 +2,6 @@ import graphql from 'babel-plugin-relay/macro';
 import React from 'react';
 import { usePreloadedQuery } from 'react-relay/hooks';
 
-const { Suspense } = React;
-
 export default function Root(props) {
   const data = usePreloadedQuery(
     graphql`
@@ -23,9 +21,5 @@ export default function Root(props) {
 
   console.log(contextualPinImageUrls);
 
-  return (
-    <div className="root">
-      <Suspense fallback={'Loading...'}>{props.children}</Suspense>
-    </div>
-  );
+  return <div />;
 }
