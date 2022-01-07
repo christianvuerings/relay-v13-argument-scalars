@@ -1,0 +1,52 @@
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+}
+
+"""
+A scalar serialized as String that contains an image spec, as defined in `parse_image_args`
+"""
+scalar ImageSpec @serializationPrimitive(type: STRING)
+
+"""
+Pinterest User.
+"""
+type User implements Node
+  @pinModel(
+    def: {
+      ref: { class: "User", module: "core.models.user_model" }
+      modelType: MANAGER_MODEL
+      renderStyle: true
+    }
+  ) {
+  contextualPinImageUrls(
+    "The image specification (typically the image size)"
+    spec: ImageSpec
+  ): [ImageDetails]
+
+  websiteUrl: String
+}
+
+type ImageDetails {
+  height: Int
+
+  url: String
+
+  width: Int
+}
+
+type Query {
+  v3UserQuery(
+    """
+    A user id or 'me' if you're using user level auth.
+    If 'me' then information about the current user is returned
+    Param directive added
+    """
+    user: String!
+  ): User
+}
